@@ -1,17 +1,17 @@
 <div align="center">
-<h1><div align="center">
 <h1>RoboMonster: Compositional Generalization of Heterogeneous Embodied Agents</h1>
 
 <!-- <a href="https://arxiv.org/abs/2503.16408"><img src="https://img.shields.io/badge/arxiv-2503.16408-b31b1b" alt="arXiv"></a>
-<a href="https://iranqin.github.io/robofactory/"><img src="https://img.shields.io/badge/Project_Page-green" alt="Project Page"></a>
-<a href='https://huggingface.co/datasets/FACEONG/RoboFactory_Dataset'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue'></a>
-</div> -->
+<a href="https://your_project_page_here"><img src="https://img.shields.io/badge/Project_Page-green" alt="Project Page"></a>
+<a href='https://huggingface.co/datasets/...'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue'></a> -->
+
+</div>
 
 ## 🧠 Overview
 RoboMonster is a compositional embodied manipulation framework and benchmark built on [ManiSkill](https://www.maniskill.ai/) that treats a robot as a team of heterogeneous, specialized end-effectors instead of a single gripper. It pairs a constraint-driven high-level planner with imitation-learned control policies for each tool to select, coordinate, and sequence the right end-effector for each sub-task, showing clear gains over gripper-only baselines.
 
 <div align="center">
-  <img src="./images/motivation.png" width="950"/>
+  <img src="./Imges/motivation.png" width="950"/>
 </div>
 
 ## 🚀 Quick Start
