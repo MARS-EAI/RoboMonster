@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<robot name="panda">
+  <!-- =======================
+       GROUPS
+       ======================= -->
+  <!-- 7-DOF 主臂，仅包含活动关节 -->
+  <group name="panda_arm">
+    <joint name="panda_joint1"/>
+    <joint name="panda_joint2"/>
+    <joint name="panda_joint3"/>
+    <joint name="panda_joint4"/>
+    <joint name="panda_joint5"/>
+    <joint name="panda_joint6"/>
+    <joint name="panda_joint7"/>
+  </group>
+
+  <!-- 工具组：你的 sleeve（可视与碰撞都在该 link 上） -->
+  <group name="tool">
+    <link name="panda_sleeve"/>
+  </group>
+
+  <!-- =======================
+       GROUP STATES
+       ======================= -->
+  <!-- 参考你给的示例：home 姿态 -->
+  <group_state name="home" group="panda_arm">
+    <joint name="panda_joint1" value="0"/>
+    <joint name="panda_joint2" value="0"/>
+    <joint name="panda_joint3" value="0"/>
+    <joint name="panda_joint4" value="0"/>
+    <joint name="panda_joint5" value="0"/>
+    <joint name="panda_joint6" value="3.1416"/>
+    <joint name="panda_joint7" value="1.5708"/>
+  </group_state>
+
+  <!-- =======================
+       END EFFECTOR
+       ======================= -->
+  <!-- 将工具组 tool 作为末端执行器，挂在 panda_hand 上。
+       （如果你更希望把 EE 直接挂在 panda_sleeve，也可以把 parent_link 改为 panda_sleeve） -->
+  <end_effector name="eef" parent_link="panda_hand" group="tool"/>
+
+  <!-- =======================
+       VIRTUAL JOINT
+       ======================= -->
+  <!-- 将底座与 world 以固定虚拟关节相连（常规 MoveIt 配置） -->
+  <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="panda_link0"/>
+
+  <!-- =======================
+       DISABLE COLLISIONS
+       ======================= -->
+  <!-- 典型相邻/从不接触的屏蔽（在 Setup Assistant 中也会自动生成/优化） -->
+  <disable_collisions link1="panda_link0" link2="panda_link1" reason="Adjacent"/>
+  <disable_collisions link1="panda_link1" link2="panda_link2" reason="Adjacent"/>
+  <disable_collisions link1="panda_link2" link2="panda_link3" reason="Adjacent"/>
+  <disable_collisions link1="panda_link3" link2="panda_link4" reason="Adjacent"/>
+  <disable_collisions link1="panda_link4" link2="panda_link5" reason="Adjacent"/>
+  <disable_collisions link1="panda_link5" link2="panda_link6" reason="Adjacent"/>
+  <disable_collisions link1="panda_link6" link2="panda_link7" reason="Adjacent"/>
+  <disable_collisions link1="panda_link7" link2="panda_hand"  reason="Default"/>
+  <disable_collisions link1="panda_hand"  link2="panda_link5" reason="Default"/>
+  <disable_collisions link1="panda_hand"  link2="panda_link6" reason="Never"/>
+  <disable_collisions link1="panda_hand"  link2="panda_link7" reason="Default"/>
+
+  <!-- 与 sleeve 相关的屏蔽（相邻或不会接触） -->
+  <disable_collisions link1="panda_hand"   link2="panda_sleeve" reason="Adjacent"/>
+  <disable_collisions link1="panda_link7"  link2="panda_sleeve" reason="Default"/>
+  <disable_collisions link1="panda_link6"  link2="panda_sleeve" reason="Never"/>
+</robot>
