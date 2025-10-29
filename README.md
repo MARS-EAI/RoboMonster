@@ -96,7 +96,7 @@ python script/convert_data.py data/h5_data/circle_vase_pointcloud.h5 --agent-num
 
 # 4. (Optional) you can check our converted .h5 files by the read_h5.py in script/tools/h5py/ folder.
 # Example:
-mv data/{task_name}_{data_type}.h5 script/tools/h5py/input
+cp data/{task_name}_{data_type}.h5 script/tools/h5py/input
 python script/tools/h5py/read_h5.py -i data/{task_name}_{data_type}.h5
 ```
 
@@ -108,7 +108,7 @@ You can train the DP model through the following code:
 # Example for DP2 training:
 python policy/Diffusion-Policy/diffusion_policy/workspace/workspace_dp2.py --config-name=dp2 task=2a_swipe_card_2d
 # Example for DP3 training:
-python policy/Diffusion-Policy/diffusion_policy/workspace/workspace_dp3.py --config-name=dp3 task=2a_circle_vase_3d
+python policy/Diffusion-Policy/diffusion_policy/workspace/workspace_dp3.py --config-name=dp3 task=1a_circle_vase_3d
 ```
 ### Evaluation
 Use the .ckpt file (usually in the outputs/ folder) to evaluate your model results after the training is completed. When setting DEBUG_MODE to 1, it will output more info.
