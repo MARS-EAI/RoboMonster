@@ -1,0 +1,69 @@
+# configuration for objects and agents, add scene as well
+task_name: PickPokeball
+scene:
+  name: Robocasa
+  env:
+    scene_idx: 0
+    layout_idx: 3  # 0-9
+    style_idx: 3  # 0-11
+    customized_layout: configs/robocasa/customized_layout.yaml 
+    
+objects:
+  - name: pokeball
+    file_path: assets/objects/pokeball_annotated/pokeball.glb
+    annotation_path: assets/objects/pokeball_annotated/model_data.json
+    visual:
+      filename: assets/objects/pokeball_annotated/pokeball.glb
+      scale: [0.04, 0.04, 0.04]
+    collision:
+      type: convex
+      filename: assets/objects/pokeball_annotated/pokeball.glb
+      scale: [0.04, 0.04, 0.04]
+    pos:
+      ppos:
+        p: [2.75, -3.05, 0.92]
+        q: [0., 0., 0.]
+      qpos: [0.7071, 0.7071, 0., 0.]
+      randp_scale: [0.2, 0.2, 0.]
+      randq_scale: [0., 0., 0., 0.]
+    mass_params:
+      mass: 2
+      cmass_local_pose: [0., 0., 0.]
+      inertia: [0, 0, 0]
+    
+agents:
+  - 
+    robot_uid: panda-0
+    pos:
+      ppos:
+        p: [2.25, -3.25, 0.92]
+        q: [0., 0., 0.]
+      qpos: [0., 0.3926990817, 0., -1.9634954085, 0., 2.3561944902, 0.7853981634, 0.04, 0.04]
+      # qpos: [0., 0.3926990817, 0., -1.9634954085, 0., 2.3561944902, 0.7853981634]
+      randp_scale: [0., 0., 0.]
+      randq_scale: [0., 0., 0., 0., 0., 0., 0., 0., 0.]
+      # randq_scale: [0., 0., 0., 0., 0., 0., 0.]
+
+cameras:
+  sensor:
+    - 
+      uid: head_camera
+      pose:
+        type: pose
+        params: [[3.17603, -3.41113, 1.36596], [0.285906, -0.173735, 0.0527924, 0.940897]]
+      width: 2048
+      height: 2048
+      fov: 1.5707963268
+      near: 0.1
+      far: 10
+  human_render:
+    - 
+      uid: render_camera
+      pose:
+        type: pose
+        params: [[3.17603, -3.41113, 1.36596], [0.285906, -0.173735, 0.0527924, 0.940897]]
+      width: 2048
+      height: 2048
+      fov: 1.5707963268
+      near: 0.1
+      far: 10

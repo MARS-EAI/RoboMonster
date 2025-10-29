@@ -1,0 +1,63 @@
+# compilation and distribution
+__pycache__
+RoboMonster/assets/*
+RoboMonster/outputs/*
+RoboMonster/logs/*
+RoboMonster/demos/
+RoboMonster/dataset/*
+assets/*
+RoboMonster/demos
+RoboMonster/data
+RoboMonster/eval_video
+RoboMonster/checkpoints
+
+docs/
+_ext
+*.pyc
+*.so
+build/
+dist/
+*.egg-info/
+
+# ipython/jupyter notebooks
+# *.ipynb
+**/.ipynb_checkpoints/
+
+# Editor temporaries
+*.swn
+*.swo
+*.swp
+*~
+*.log
+
+# MacOS
+*.DS_Store
+
+# Pycharm editor settings
+.idea
+
+# VSCode editor settings
+.vscode
+
+# project-relevant
+imgui.ini
+
+# directories that should be ignored in general
+# but can be excluded explicitly
+/tmp
+/data
+/demos
+/videos
+/examples/benchmarking/videos
+/assets/*
+/testvideo
+
+# benchmarking
+/benchmark_results
+/mani_skill/examples/benchmarking/benchmark_results
+/mani_skill/examples/benchmarking/videos
+# testing
+.coverage*
+htmlcov/
+
+!RoboMonster/assets/.gitkeep

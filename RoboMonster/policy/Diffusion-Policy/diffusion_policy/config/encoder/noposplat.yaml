@@ -1,0 +1,29 @@
+defaults:
+  - backbone: croco
+
+name: noposplat
+coor_type: self
+
+opacity_mapping:
+  initial: 0.0
+  final: 0.0
+  warm_up: 1
+
+num_monocular_samples: 32
+num_surfaces: 1
+predict_opacity: false
+
+gaussians_per_pixel: 1
+
+gaussian_adapter:
+  gaussian_scale_min: 0.5
+  gaussian_scale_max: 15.0
+  sh_degree: 4
+
+d_feature: 128
+
+apply_bounds_shim: true
+
+gs_params_head_type: dpt_gs
+pose_free: true
+pretrained_weights: "/fs-computility/mabasic/kangli/RoboFactory-Lightning/pretrained_weights/noposplat.ckpt"

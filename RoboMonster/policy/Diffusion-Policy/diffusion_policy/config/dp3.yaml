@@ -1,0 +1,126 @@
+defaults:
+  - _self_
+  - task: default_task
+
+name: ${task.name}
+task_name: ${task.name}
+shape_meta: ${task.shape_meta}
+
+seed: 42
+
+horizon: 32
+n_obs_steps: 20
+n_action_steps: 8
+n_latency_steps: 0
+dataset_obs_steps: ${n_obs_steps}
+past_action_visible: False
+keypoint_visible_rate: 1.0
+obs_as_global_cond: True
+
+policy:
+  _target_: diffusion_policy.policy.dp3.DP3
+
+  shape_meta: ${shape_meta}
+  
+  noise_scheduler:
+    _target_: diffusers.schedulers.scheduling_ddim.DDIMScheduler
+    num_train_timesteps: 100
+    beta_start: 0.0001
+    beta_end: 0.02
+    beta_schedule: squaredcos_cap_v2
+    clip_sample: True
+    set_alpha_to_one: True
+    steps_offset: 0
+    prediction_type: sample
+
+  optimazer_cfg: ${optimizer}
+  scheduler_cfg: ${lr_scheduler}
+  
+  horizon: ${horizon}
+  n_action_steps: ${eval:'${n_action_steps}+${n_latency_steps}'}
+  n_obs_steps: ${n_obs_steps}
+  num_inference_steps: 100
+  obs_as_global_cond: ${obs_as_global_cond}
+  # crop_shape: null
+  diffusion_step_embed_dim: 128
+  # down_dims: [512, 1024, 2048]
+  down_dims: [256, 512, 1024]
+  encoder_output_dim: 64
+  kernel_size: 5
+  n_groups: 8
+
+  use_pc_color: false
+  pointnet_type: "pointnet"
+
+  pointcloud_encoder_cfg:
+    in_channels: 3
+    out_channels: ${policy.encoder_output_dim}
+    use_layernorm: true
+    final_norm: layernorm # layernorm, none
+    normal_channel: false
+
+ema:
+  update_after_steps: 0
+
+dataloader:
+  train:
+    batch_size: 32
+    num_workers: 8
+    shuffle: True
+    pin_memory: True
+  val:
+    batch_size: 64
+    num_workers: 8
+    shuffle: False
+    pin_memory: True
+
+optimizer:
+  lr: 1.0e-4
+  betas: [0.95, 0.999]
+  eps: 1.0e-8
+  weight_decay: 1.0e-6
+
+lr_scheduler:
+  scheduler: cosine
+  warmup_steps: 500
+
+checkpoint:
+  _target_: lightning.pytorch.callbacks.ModelCheckpoint
+  monitor: val/loss
+  mode: min
+  save_top_k: -1
+  save_last: True
+  save_weights_only: False
+  every_n_epochs: 50
+  save_on_train_epoch_end: False
+  filename: 'epoch={epoch:0>3d}-loss={val/loss:.4f}.ckpt'
+  auto_insert_metric_name: False
+
+trainer:
+  max_epochs: 300
+  accelerator: auto
+  devices: auto
+  precision: 32
+  check_val_every_n_epoch: 1
+  enable_progress_bar: True
+
+logging:
+  project: DP3
+  mode: offline
+  name: ${now:%Y.%m.%d-%H.%M.%S}_${task_name}
+  tags: ["${task_name}"]
+  id: null
+  group: null
+
+multi_run:
+  run_dir: outputs/DP3/${now:%Y.%m.%d.%H.%M.%S}_${task_name}
+  wandb_name_base: ${now:%Y.%m.%d-%H.%M.%S}_${task_name}
+
+hydra:
+  job:
+    override_dirname: ${task_name}
+  run:
+    dir: outputs/DP3/${now:%Y.%m.%d.%H.%M.%S}_${task_name}
+  sweep:
+    dir: outputs/DP3/${now:%Y.%m.%d.%H.%M.%S}_${task_name}
+    subdir: ${hydra.job.num}

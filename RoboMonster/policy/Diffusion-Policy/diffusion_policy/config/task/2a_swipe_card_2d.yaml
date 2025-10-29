@@ -1,0 +1,37 @@
+defaults:
+  - default_task
+
+name: 2a_swipe_card_2d
+agent_num: 2
+
+image_shape: &image_shape [3, 256, 256]
+action_shape: &action_shape [16]
+
+shape_meta: &shape_meta
+  # acceptable types: rgb, low_dim
+  obs:
+    head_cam:
+      shape: *image_shape
+      type: rgb
+    agent_pos:
+      shape: *action_shape
+      type: low_dim
+  action:
+    shape: *action_shape
+
+dataset:
+  # _target_: diffusion_policy.dataset.dataset2d.Dataset2D
+  _target_: diffusion_policy.dataset.dataset2d_mem.Dataset2D
+  dataset_path: data/swipe_card_rgb.h5
+  horizon: ${horizon}
+  pad_before: ${eval:'${n_obs_steps}-1'}
+  pad_after: ${eval:'${n_action_steps}-1'}
+  input_meta: 
+    obs:
+      head_cam: *image_shape
+      agent_pos_0: *action_shape
+      agent_pos_1: *action_shape
+    action_0: *action_shape
+    action_1: *action_shape
+  seperate_action: False
+  

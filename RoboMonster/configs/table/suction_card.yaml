@@ -1,0 +1,104 @@
+# configuration for objects and agents, add scene as well
+task_name: SuctionCard
+scene:
+  name: Table
+  
+  primitives:
+    - name: cube
+      builder: mani_skill.utils.building.actors.build_cube
+      params:
+        half_size: 0.1
+        color: [0.5, 0.5, 0.5, 1]
+        name: cube
+        initial_pose:
+          p: [-0.15, -0.05, 0.1]
+      pos:
+        ppos:
+          p: [-0.15, -0.05, 0.1]
+        qpos: [1., 0., 0., 0.]
+        randp_scale: [0, 0, 0.]
+        randq_scale: [0., 0., 0., 0.]
+        random_quaternions: [1, 1, 0]
+        
+  assets:
+    - name: table
+      file_path: assets/scenes/table/table.glb
+      collision:
+        type: box
+        pos:
+          p: [0.0, 0.0, 0.45982145]
+          half_size: [3.0225, 1.51125, 0.45982145]
+      pos:
+        ppos:
+          p: [-0.12, 0.0, -0.9196429]
+          q: [0.0, 0.0, 1.5707963268]
+        randp_scale: [0.0, 0.0, 0.0]
+        randq_scale: [0.0, 0.0, 0.0, 0.0]
+      scale: [4.375, 4.375, 1.75]
+      
+  env:
+    floor_width: 100
+
+objects:
+  - name: card
+    file_path: assets/objects/card_annotated/card.glb
+    annotation_path: assets/objects/card_annotated/model_data.json
+    material:
+      type: sapien.pysapien.physx.PhysxMaterial
+      params:
+        static_friction: 1  
+        dynamic_friction: 1
+        restitution: 0.0
+    visual:
+      filename: assets/objects/card_annotated/card.glb
+      scale: [1.0, 1.0, 1.0]   
+    collision:
+      type: convex             
+      filename: assets/objects/card_annotated/card.glb
+      scale: [1.0, 1.0, 1.0]
+    pos:
+      ppos:
+        p: [-0.2, 0.0, 0.21]
+      qpos: [0.000, 0.00, 0.7, 0.7]
+      randp_scale: [0.1, 0.03, 0.0]
+      randq_scale: [0.0, 0.0, 0.0, 0.0]
+    mass_params:
+      mass: 0.005
+      cmass_local_pose: [0., 0., 0.]
+      inertia: [0.001, 0.001, 0.001]
+    
+agents:
+  - 
+    robot_uid: panda-0
+    pos:
+      ppos:
+        p: [-0.615, 0., 0.]
+        q: [0., 0., 0.]
+      qpos: [0.0, -0.48478693, 6.7472756e-05, -2.0742826, 0.0, 1.5894892, 0.78585595, 0.04, 0.04]
+      # qpos: [0.0, -0.48478693, 6.7472756e-05, -2.0742826, 0.0, 1.5894892, 0.78585595, 0., 0.]
+      randp_scale: [0., 0., 0.]
+      randq_scale: [0., 0., 0., 0., 0., 0., 0.,0.,0.]
+
+cameras:
+  sensor:
+    - 
+      uid: head_camera
+      pose:
+        type: look_at
+        params: [[0.1, 0.3, 0.5], [-0.6, 0, 0.1]]
+      width: 256
+      height: 256
+      fov: 1.5707963268
+      near: 0.1
+      far: 10
+  human_render:
+    - 
+      uid: render_camera
+      pose:
+        type: look_at
+        params: [[0.1, 0.3, 0.5], [-0.1, 0, 0.1]]
+      width: 256
+      height: 256
+      fov: 1.5707963268
+      near: 0.1
+      far: 10
